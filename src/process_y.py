@@ -1,6 +1,8 @@
 import csv
 import numpy as np
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 ## Constants
 DATA_LOCATION = "../data/"
@@ -22,11 +24,7 @@ for row in rows:
 
 labels = list(set([item for sublist in ydata for item in sublist]))
 
-d = []
-for label in labels:
-    d.append((label,'float64'))
-
-Y = np.zeros((len(ydata),len(d)))
+Y = np.zeros((len(ydata),len(labels)))
 
 iteration = 0
 for y in ydata:
@@ -36,6 +34,7 @@ for y in ydata:
 
 Y = pd.DataFrame(data = Y, columns = labels)
 
+'''
 print "############################# head"
 print Y.head()
 print "############################# tail"
@@ -48,3 +47,22 @@ print "############################# summary"
 print Y.describe()
 print "############################# shape"
 print Y.shape
+print "############################# correlation plot"
+'''
+def plot_corr(corr):
+    plt.figure()
+    plt.imshow(corr, cmap='RdYlGn', interpolation='none', aspect='auto')
+    plt.colorbar()
+    plt.grid(True, ls = '--', color = 'k')
+    plt.xticks(range(len(corr)), corr.columns, rotation='vertical', fontsize = 8)
+    plt.yticks(range(len(corr)), corr.columns, fontsize = 10);
+    plt.suptitle('Feature Correlations Heat Map', fontsize=15, fontweight='bold')
+    plt.show()
+
+#plot_corr(Y.corr())
+
+## Returns indexes of rows containing this particular label and 
+##                          indexes of rows not containing this label
+## The list of indexes is returned as np.array in both the cases
+def data_by_label(label):
+    return Y[Y[label] == 1].index.values, Y[Y[label] == 0].index.values
