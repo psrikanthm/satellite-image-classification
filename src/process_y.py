@@ -56,7 +56,7 @@ def plot_corr(corr):
     plt.grid(True, ls = '--', color = 'k')
     plt.xticks(range(len(corr)), corr.columns, rotation='vertical', fontsize = 8)
     plt.yticks(range(len(corr)), corr.columns, fontsize = 10);
-    plt.suptitle('Feature Correlations Heat Map', fontsize=15, fontweight='bold')
+    plt.suptitle('Label Correlations Heat Map', fontsize=15, fontweight='bold')
     plt.show()
 
 #plot_corr(Y.corr())
