@@ -1,8 +1,7 @@
 import csv
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 ## Constants
 DATA_LOCATION = "../data/"
@@ -33,7 +32,6 @@ for y in ydata:
     iteration += 1
 
 Y = pd.DataFrame(data = Y, columns = labels)
-
 '''
 print "############################# head"
 print Y.head()
@@ -66,3 +64,7 @@ def plot_corr(corr):
 ## The list of indexes is returned as np.array in both the cases
 def data_by_label(label):
     return Y[Y[label] == 1].index.values, Y[Y[label] == 0].index.values
+
+## Returns shrinked data frame with only columns specified in labels
+def selected_columns(labels):
+    return Y[labels]
