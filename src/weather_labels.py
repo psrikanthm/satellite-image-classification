@@ -10,8 +10,8 @@ TRAIN_TIFF = "../data/train-tif-v2"
 
 ##################################
 
-common_labels = ["primary", "water", "habitation", "agriculture", "road", "cultivation", "bare_ground"]
-Y = py.selected_columns(common_labels)
+weather_labels = ["cloudy", "partly_cloudy", "haze", "clear"]
+Y = py.selected_columns(weather_labels)
 Y = Y[(Y.T != 0).any()]
 
 X = []
@@ -22,8 +22,8 @@ for i in Y.index:
 
 X = np.array(X)
 
-np.save('../data/x_train_cl.npy', X)
-np.save('../data/y_train_cl.npy', Y)
+np.save('../data/x_train_weather.npy', X)
+np.save('../data/y_train_weather.npy', Y)
 
 print X.shape
 print Y.shape
