@@ -4,9 +4,11 @@ from keras.layers.convolutional import Convolution2D, MaxPooling2D, ZeroPadding2
 from keras.optimizers import SGD
 import cv2, numpy as np
 
-def VGG_16(height, width, class_size, weights_path=None):
+def get_model(img_width, img_height, classes):
     model = Sequential()
-    model.add(ZeroPadding2D((1,1),input_shape=(4, height,width)))
+    input_shape = (img_width, img_height, 3)
+
+    model.add(ZeroPadding2D((1,1),input_shape= input_shape))
     model.add(Convolution2D(64, 3, 3, activation='relu'))
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(64, 3, 3, activation='relu'))
@@ -47,23 +49,13 @@ def VGG_16(height, width, class_size, weights_path=None):
     model.add(Dropout(0.5))
     model.add(Dense(4096, activation='relu'))
     model.add(Dropout(0.5))
-    model.add(Dense(class_size, activation='softmax'))
-
-    if weights_path:
-        model.load_weights(weights_path)
+    model.add(Dense(classes, activation='softmax'))
 
     return model
 
-if __name__ == "__main__":
-    # load in the images
-    # X =
-    # load in the label vectors
-    # Y = 
-
-    # Test pretrained model
-    model = VGG_16() # gotta add some info here
+def run():
+    model = VGG_16()
     sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
     model.compile(optimizer=sgd, loss='categorical_crossentropy')
     model.fit(X,Y, epochs=10)
     out = model.predict(X)
-    print np.argmax(out)

@@ -1,7 +1,9 @@
 import numpy as np
-import simple_arch
 
-import csv
+import simple_arch
+import vgg
+
+from keras.optimizers import SGD
 
 ############ Constants ##########
 TRAIN_X_CL = "../data/x_train_cl.npy"
@@ -20,10 +22,21 @@ YTRAIN_WR = np.load(TRAIN_Y_WR)
 
 XTEST = np.load(TEST_X)
 
-ytrue, yval, y1 = simple_arch.run(XTRAIN_CL, YTRAIN_CL, XTEST)
-_, _, y2 = simple_arch.run(XTRAIN_WR, YTRAIN_WR, XTEST)
 
-np.save('../data/y_test_cl.npy', y1)
-np.save('../data/y_test_weather.npy', y2)
-np.save('../data/ytrue_cl.npy', ytrue)
-np.save('../data/yval_cl.npy', yval)
+_,img_width, img_height,_ = XTRAIN_CL.shape
+_, classes = YTRAIN_CL.shape
+model = vgg.get_model(img_width, img_height, classes)
+sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
+model.compile(optimizer=sgd, loss='categorical_crossentropy')
+model.fit(XTRAIN_CL, YTRAIN_CL, epochs=5, verbose = 1, validation_split = 0.1)
+YTEST_CL = model.predict(XTEST)
+np.save('../data/y_test_cl.npy', YTEST_CL)
+
+_,img_width, img_height,_ = XTRAIN_WR.shape
+_, classes = YTRAIN_WR.shape
+model = vgg.get_model(img_width, img_height, classes)
+sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
+model.compile(optimizer=sgd, loss='categorical_crossentropy')
+model.fit(XTRAIN_WR, YTRAIN_WR, epochs=5, verbose = 1, validation_split = 0.1)
+YTEST_WR = model.predict(XTEST)
+np.save('../data/y_test_weather.npy', YTEST_WR)
