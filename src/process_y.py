@@ -1,25 +1,25 @@
 import csv
 import numpy as np
 import pandas as pd
+from constants import *
+
 #import matplotlib.pyplot as plt
 
-## Constants
-DATA_LOCATION = "../data/"
-Y_CSV = "train.csv"
-##
-
 #Read the data and parse into a Matrix
-ifile = open(DATA_LOCATION + Y_CSV, "rb")
+ifile = open(YTRAIN_CSV, "rb")
 rows = csv.reader(ifile)
 next(rows)
 #Y = np.zeros((sum(1 for row in rows),N_LABELS))
 
 count = 0
+
 ydata = []
+filenames = []
 
 for row in rows:
     count += 1
     ydata.append(row[1].split())
+    filenames.append(row[0].strip())
 
 labels = list(set([item for sublist in ydata for item in sublist]))
 
@@ -68,3 +68,6 @@ def data_by_label(label):
 ## Returns shrinked data frame with only columns specified in labels
 def selected_columns(labels):
     return Y[labels]
+
+def get_data():
+    return (filenames, Y)
