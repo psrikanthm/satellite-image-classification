@@ -8,6 +8,7 @@ Created on Wed Jun  7 17:33:04 2017
 import cv2
 import numpy as np
 from scipy import misc
+from scipy.ndimage.interpolation import rotate
 import matplotlib.pyplot as plt
 
 def add_noise(image, intensity):
@@ -19,6 +20,7 @@ def add_noise(image, intensity):
     result = noise + image
     # make sure none of the values go outside the expected range
     result = np.matrix.clip(result, 0, 255).astype(int)
+    
     return result
 
 def add_artifacts(image, percent):
@@ -39,20 +41,28 @@ def add_artifacts(image, percent):
 def rotate_image(image, degrees):
     # rotate the image by a certain number of degrees and then fill in the
     # gaps by mirroring in order to create an image of the same size
-    pass
-
+    return rotate(image, degrees, reshape=False, mode="reflect")
+    
 def flip_image(image, horiz = True, vert = False):
     # flip the image vertically or horizonally
-    pass
+    if horiz:
+        image = np.fliplr(image)
+    if vert:
+        image = np.flipud(image)
+        
+    return image
 
 if __name__ == "__main__":
-    image = cv2.imread("../imgs/Lenna.png")
-    noisy_image = add_noise(image,0.1)
+    image = misc.imread("../imgs/Lenna.png")
+    noisy_image = add_noise(image,0.5)
     shrunk = add_artifacts(image, 0.9)
-    plt.imshow(image)
-    plt.gray()
-    plt.show()
-    plt.imshow(shrunk)
-    plt.gray()
-    plt.show()
+    rotated = rotate_image(image, 40)
+    flipped = flip_image(image, True,True)
+    
+    misc.imshow(image)
+#    misc.imshow(noisy_image)
+#    misc.imshow(shrunk)
+    misc.imshow(rotated)
+#    misc.imshow(flipped)
+    
     
