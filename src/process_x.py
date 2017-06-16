@@ -5,8 +5,8 @@ import os
 
 from constants import *
 
-(names, _) = py.get_data()
-
+names = py.filenames
+"""
 X = []
 for name in names:
     print "Read Image TIF: ", name
@@ -27,17 +27,23 @@ X = []
 filenames = []
 for f in sorted(os.listdir(TEST_TIF)):
     filename = os.path.splitext(f)[0]
-    print "Read Image TIF_TEST: ", filename
-    img = cv2.imread(TEST_TIF + filename + '.tif', cv2.IMREAD_UNCHANGED)
-    X.append(img)
+    #print "Read Image TIF_TEST: ", filename
+    #img = cv2.imread(TEST_TIF + filename + '.tif', cv2.IMREAD_UNCHANGED)
+    #X.append(img)
     filenames.append(filename)
-X = np.array(X)
-np.save(XTEST_TIF, X)
+#X = np.array(X)
+#np.save(XTEST_TIF, X)
 np.save(XTEST_FILES, filenames)
+"""
 
 X = []
-for filename in filenames:
+filenames = []
+for f in sorted(os.listdir(TEST_JPG)):
+    filename = os.path.splitext(f)[0]
     print "Read Image JPG_TEST: ", filename
     img = cv2.imread(TEST_JPG + filename + '.jpg', cv2.IMREAD_UNCHANGED)
     X.append(img)
+    filenames.append(filename)
+
 np.save(XTEST_JPG, X)
+np.save(XTEST_FILES, filenames)

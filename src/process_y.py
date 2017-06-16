@@ -64,10 +64,3 @@ def plot_corr(corr):
 ## The list of indexes is returned as np.array in both the cases
 def data_by_label(label):
     return Y[Y[label] == 1].index.values, Y[Y[label] == 0].index.values
-
-## Returns shrinked data frame with only columns specified in labels
-def selected_columns(labels):
-    return Y[labels]
-
-def get_data():
-    return (filenames, Y)

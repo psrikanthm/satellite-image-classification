@@ -10,5 +10,9 @@ XTEST_TIF = "../data/x_test_tif.npy"
 XTEST_JPG = "../data/x_test_jpg.npy"
 XTEST_FILES = "../data/test_filenames.npy"
 
-common_labels = ["primary", "water", "habitation", "agriculture", "road", "cultivation", "bare_ground"]
+YTEST_CL = "../data/y_test_cl.npy"
+YTEST_WR = "../data/y_test_wr.npy"
+PRED_FILE = '../data/prediction.csv'
+
+common_labels = ["cultivation", "primary", "water", "habitation", "agriculture", "road", "bare_ground"]
 weather_labels = ["cloudy", "partly_cloudy", "haze", "clear"]
