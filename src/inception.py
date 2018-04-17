@@ -7,7 +7,8 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.layers import Input
 
 
-def get_model(img_width = 256, img_height = 256, channels = 3, classes = 4, trainable_from='mixed9'):
+def get_model(img_width = 256, img_height = 256, channels = 3, classes = 4, \
+                trainable_from='mixed9', softmax = False):
 
 # create the base pre-trained model
     base_model = InceptionV3(weights='imagenet', include_top=False, input_shape = (img_width, img_height, channels))
@@ -22,8 +23,11 @@ def get_model(img_width = 256, img_height = 256, channels = 3, classes = 4, trai
 
 # let's add a fully-connected layer
     x = Dense(1024, activation='relu')(x)
-    predictions = Dense(classes, activation='softmax')(x)
 
+    if softmax:
+        predictions = Dense(classes, activation='softmax')(x)
+    else:
+        predictions = Dense(classes, activation='sigmoid')(x)
 # this is the model we will train
     model = Model(input=base_model.input, output=predictions)
 
