@@ -1,4 +1,4 @@
-# amazon-data
-data science
+Satellite images classification with Transfer learning approach
 
-https://docs.google.com/document/d/1e3av8Uz-51k_j15_CNir8pudpkacHhmUVY5hi85JSYo/edit?usp=sharing
+This was done for the Kaggle competition -
+https://www.kaggle.com/c/planet-understanding-the-amazon-from-space
